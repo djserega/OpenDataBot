@@ -24,10 +24,10 @@ namespace OpenDataBot
                     string apiKey = Console.ReadLine();
                     _openDataBot.SetAPIKey(apiKey);
                     Console.Clear();
-                    WriteListAction();
                 }
                 else
                 {
+                    WriteListAction();
                     try
                     {
                         action = int.Parse(Console.ReadLine());
@@ -39,6 +39,9 @@ namespace OpenDataBot
 
                     switch (action)
                     {
+                        case -1:
+                            _openDataBot.SetAPIKey(string.Empty);
+                            break;
                         case 1:
                             Console.WriteLine("Получение данных по ФОП в разработке.");
                             Console.WriteLine();
@@ -51,7 +54,9 @@ namespace OpenDataBot
                             WriteListAction();
                             break;
                         default:
+                            Console.Clear();
                             Console.WriteLine("Ошибка определения действия.");
+                            WriteListAction();
                             break;
                     }
                 }

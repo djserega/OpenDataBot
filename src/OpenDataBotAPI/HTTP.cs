@@ -20,7 +20,7 @@ namespace OpenDataBotAPI
 
         internal string CompanyCode { get; set; }
 
-        internal string GetInfo<T>() where T : class
+        internal List<T> GetInfo<T>() where T : class, new()
         {
             WebRequest webRequest = GetWebRequest(typeof(T));
 
@@ -31,7 +31,8 @@ namespace OpenDataBotAPI
             {
                 response = reader.ReadToEnd();
             }
-            return response;
+
+            return Json<T>.DeserializeString(response);
         }
 
         private WebRequest GetWebRequest(Type type)
@@ -40,7 +41,10 @@ namespace OpenDataBotAPI
             if (type == typeof(Company))
             {
                 stringBuilder.Append("/company/");
-                stringBuilder.Append(CompanyCode.ToString());
+                stringBuilder.Append(CompanyCode);
+                stringBuilder.Append("?apiKey=");
+                stringBuilder.Append(_apiKey);
+
             }
             else
                 return null;
@@ -48,7 +52,6 @@ namespace OpenDataBotAPI
             WebRequest webRequest = WebRequest.Create(stringBuilder.ToString());
             webRequest.Method = "get";
             webRequest.ContentType = "application/json";
-            webRequest.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
             return webRequest;
         }
