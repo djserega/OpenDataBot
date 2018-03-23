@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenDataBotAPI
 {
-    public class API_20
+    [Guid("7418C8E7-A649-48B7-B682-04DC923C4DB4"),]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ComSourceInterfaces(typeof(IAPI_20Events))]
+    public class API_20 : IAPI_20
     {
         private string _apiKey;
         private HTTP _http;
@@ -29,7 +33,8 @@ namespace OpenDataBotAPI
         public string ErrorText { get; private set; }
 
 
-        public List<Company> ListCompany { get; private set; }
+        public Fop Fop { get; private set; }
+        public ICollection<Company> ListCompany { get; private set; }
 
 
         public API_20()
@@ -67,7 +72,7 @@ namespace OpenDataBotAPI
 
             InitializeHTTP();
 
-            Fop fop = _http.GetInfo<Fop>(code);
+            Fop = _http.GetInfo<Fop>(code);
         }
 
         public void GetCompany(string code)

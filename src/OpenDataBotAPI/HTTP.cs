@@ -21,15 +21,17 @@ namespace OpenDataBotAPI
 
         internal T GetInfo<T>(string param) where T : class, new()
         {
-            WebRequest webRequest = GetWebRequest(typeof(T), param);
+            string response = new StreamReader(@"C:\c#\github\OpenDataBot\fop.txt").ReadToEnd();
 
-            WebResponse webResponse = webRequest.GetResponse();
+            //WebRequest webRequest = GetWebRequest(typeof(T), param);
 
-            string response = string.Empty;
-            using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
-            {
-                response = reader.ReadToEnd();
-            }
+            //WebResponse webResponse = webRequest.GetResponse();
+
+            //string response = string.Empty;
+            //using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
+            //{
+            //    response = reader.ReadToEnd();
+            //}
 
             return Json<T>.DeserializeString(response);
         }

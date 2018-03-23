@@ -59,7 +59,6 @@ namespace OpenDataBot
                             default:
                                 Console.Clear();
                                 Console.WriteLine("Ошибка определения действия.");
-                                WriteListAction();
                                 break;
                         }
 
@@ -84,4 +83,5 @@ namespace OpenDataBot
         }
 
     }
+
 }

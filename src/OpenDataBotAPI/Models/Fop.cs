@@ -12,14 +12,14 @@ namespace OpenDataBotAPI
         public string Full_name { get; set; }
         public string Location { get; set; }
         public string Status { get; set; }
-        public List<Phones> Phones { get; set; }
+        public List<string> Phones { get; set; }
         public string Email { get; set; }
         public string Registration_date { get; set; }
         public string Last_date { get; set; }
         public string Birth_date { get; set; }
         public Sex Sex { get; set; }
         public string Activities { get; set; }
-        public List<Additionally_activities> Additionally_activities { get; set; }
+        public List<string> Additionally_activities { get; set; }
         public List<ChangeItem> History { get; set; }
         public string Pdv_code { get; set; }
         public string Pdv_status { get; set; }
