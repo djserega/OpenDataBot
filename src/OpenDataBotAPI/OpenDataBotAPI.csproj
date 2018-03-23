@@ -45,6 +45,7 @@
     <Compile Include="HTTP.cs" />
     <Compile Include="Json.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Fop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
