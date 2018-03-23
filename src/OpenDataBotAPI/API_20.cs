@@ -14,6 +14,11 @@ namespace OpenDataBotAPI
         public string APIKey
         {
             get { return _apiKey; }
+            set
+            {
+                if (_apiKey != value)
+                    _apiKey = value;
+            }
         }
         public bool APIKeyIsSet
         {
@@ -32,35 +37,48 @@ namespace OpenDataBotAPI
             _apiKey = "";
         }
 
-
-        public void SetAPIKey(string apiKey)
+        private void InitializeHTTP()
         {
-            _apiKey = apiKey;
+            if (_http == null)
+                _http = new HTTP(_apiKey);
+        }
+
+        private bool CheckFilledAPIKey()
+        {
+            if (!APIKeyIsSet)
+            {
+                Error = true;
+                ErrorText = "Не указан api-ключ";
+                return false;
+            }
+            else
+            {
+                Error = false;
+                ErrorText = string.Empty;
+                return true;
+            }
+        }
+
+
+        public void GetFop(string code)
+        {
+            if (!CheckFilledAPIKey())
+                return;
+
+            InitializeHTTP();
+
+            Fop fop = _http.GetInfo<Fop>(code);
         }
 
         public void GetCompany(string code)
         {
-            if (string.IsNullOrWhiteSpace(_apiKey))
-            {
-                Error = true;
-                ErrorText = "Не указан api-ключ";
+            if (!CheckFilledAPIKey())
                 return;
-            }
 
-            InitializeAPI();
+            InitializeHTTP();
 
-            _http.CompanyCode = code;
-            ListCompany = _http.GetInfo<Company>();
+            ListCompany = _http.GetInfos<Company>(code);
         }
 
-        private void InitializeAPI()
-        {
-            if (_http == null)
-            {
-                _http = new HTTP(_apiKey);
-                Error = false;
-                ErrorText = string.Empty;
-            }
-        }
     }
 }

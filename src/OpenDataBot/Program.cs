@@ -22,7 +22,7 @@ namespace OpenDataBot
                 {
                     Console.WriteLine("Введите apikey:");
                     string apiKey = Console.ReadLine();
-                    _openDataBot.SetAPIKey(apiKey);
+                    _openDataBot.APIKey = apiKey;
                     Console.Clear();
                 }
                 else
@@ -37,27 +37,37 @@ namespace OpenDataBot
                         action = null;
                     }
 
-                    switch (action)
+                    try
                     {
-                        case -1:
-                            _openDataBot.SetAPIKey(string.Empty);
-                            break;
-                        case 1:
-                            Console.WriteLine("Получение данных по ФОП в разработке.");
-                            Console.WriteLine();
-                            WriteListAction();
-                            break;
-                        case 2:
-                            Console.WriteLine("Введите ЕДРПОУ компании:");
-                            _openDataBot.GetCompany(Console.ReadLine());
-                            Console.WriteLine();
-                            WriteListAction();
-                            break;
-                        default:
-                            Console.Clear();
-                            Console.WriteLine("Ошибка определения действия.");
-                            WriteListAction();
-                            break;
+                        switch (action)
+                        {
+                            case -1:
+                                _openDataBot.APIKey = string.Empty;
+                                break;
+                            case 1:
+                                Console.WriteLine("Введите ИНН:");
+                                _openDataBot.GetFop(Console.ReadLine());
+                                Console.WriteLine();
+                                WriteListAction();
+                                break;
+                            case 2:
+                                Console.WriteLine("Введите ЕДРПОУ:");
+                                _openDataBot.GetCompany(Console.ReadLine());
+                                Console.WriteLine();
+                                WriteListAction();
+                                break;
+                            default:
+                                Console.Clear();
+                                Console.WriteLine("Ошибка определения действия.");
+                                WriteListAction();
+                                break;
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Ошибка ввода/получения иформации.");
+                        Console.WriteLine(ex.Message);
                     }
                 }
             };
@@ -71,7 +81,6 @@ namespace OpenDataBot
             Console.WriteLine("0 - завершение работы");
             Console.WriteLine("1 - получить данные ФОП");
             Console.WriteLine("2 - получить данные Компании");
-            Console.WriteLine("3 - получить данные изменении компании");
         }
 
     }
