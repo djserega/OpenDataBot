@@ -13,7 +13,8 @@ namespace OpenDataBotAPI
         string ErrorText { get; }
 
         Fop Fop { get; }
-        ICollection<Company> ListCompany { get; }
+        Company Company { get; }
+        Company[] Companys { get; }
 
         void GetFop(string code);
         void GetCompany(string code);

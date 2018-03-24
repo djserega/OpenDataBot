@@ -14,6 +14,7 @@ namespace OpenDataBotAPI
     {
         private string _apiKey;
         private HTTP _http;
+        private List<Company> _listCompany = new List<Company>();
 
         public string APIKey
         {
@@ -34,7 +35,8 @@ namespace OpenDataBotAPI
 
 
         public Fop Fop { get; private set; }
-        public ICollection<Company> ListCompany { get; private set; }
+        public Company Company { get; private set; }
+        public Company[] Companys { get { return _listCompany.ToArray<Company>(); } }
 
 
         public API_20()
@@ -82,7 +84,11 @@ namespace OpenDataBotAPI
 
             InitializeHTTP();
 
-            ListCompany = _http.GetInfos<Company>(code);
+            _listCompany = _http.GetInfos<Company>(code);
+            if (_listCompany.Count > 0)
+                Company = _listCompany[0];
+            else
+                Company = null;
         }
 
     }
