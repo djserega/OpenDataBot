@@ -48,13 +48,22 @@ namespace OpenDataBot
                                 Console.WriteLine("Введите ИНН:");
                                 _openDataBot.GetFop(Console.ReadLine());
                                 Console.WriteLine();
-                                WriteListAction();
                                 break;
                             case 2:
                                 Console.WriteLine("Введите ЕДРПОУ:");
                                 _openDataBot.GetCompany(Console.ReadLine());
+
+                                while (_openDataBot.NextCompany())
+                                {
+                                    Console.WriteLine(_openDataBot.Company.Full_name);
+                                    Company company = _openDataBot.Company;
+                                    while (company.NextBeneficiarie())
+                                    {
+                                        Console.WriteLine(company.Beneficiarie.Title);
+                                    }
+                                }
+
                                 Console.WriteLine();
-                                WriteListAction();
                                 break;
                             default:
                                 Console.Clear();

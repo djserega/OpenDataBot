@@ -6,7 +6,7 @@ namespace OpenDataBotAPI
     [Guid("0AAF4C7A-FE36-402C-A5E8-7A800FA39201")]
     public interface IAPI_20
     {
-        string APIKey { get; set; }
+        string APIKey { set; }
         bool APIKeyIsSet { get; }
 
         bool Error { get; }
@@ -14,9 +14,13 @@ namespace OpenDataBotAPI
 
         Fop Fop { get; }
         Company Company { get; }
-        Company[] Companys { get; }
+        int CompanyCount { get; }
+        int CompanyIndex { get; set; }
+
 
         void GetFop(string code);
         void GetCompany(string code);
+
+        bool NextCompany();
     }
 }

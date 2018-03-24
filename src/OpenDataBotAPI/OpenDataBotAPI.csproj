@@ -53,8 +53,11 @@
     <Compile Include="IAPI_20.cs" />
     <Compile Include="IAPI_20Events.cs" />
     <Compile Include="Json.cs" />
-    <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\Fop.cs" />
+    <Compile Include="Models\Company\Beneficiaries.cs" />
+    <Compile Include="Models\Company\Company.cs" />
+    <Compile Include="Models\Fop\Fop.cs" />
+    <Compile Include="Models\Company\IBeneficiaries.cs" />
+    <Compile Include="Models\Company\ICompany.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

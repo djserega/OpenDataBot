@@ -15,10 +15,11 @@ namespace OpenDataBotAPI
         private string _apiKey;
         private HTTP _http;
         private List<Company> _listCompany = new List<Company>();
+        private int _companyIndex;
+
 
         public string APIKey
         {
-            get { return _apiKey; }
             set
             {
                 if (_apiKey != value)
@@ -36,7 +37,20 @@ namespace OpenDataBotAPI
 
         public Fop Fop { get; private set; }
         public Company Company { get; private set; }
-        public Company[] Companys { get { return _listCompany.ToArray<Company>(); } }
+        public int CompanyCount { get { return _listCompany.Count; } }
+        public int CompanyIndex
+        {
+            get { return _companyIndex; }
+            set
+            {
+                if (value < 0)
+                    _companyIndex = 0;
+                else if (value > _listCompany.Count - 1)
+                    _companyIndex = _listCompany.Count;
+                else
+                    _companyIndex = value;
+            }
+        }
 
 
         public API_20()
@@ -85,11 +99,25 @@ namespace OpenDataBotAPI
             InitializeHTTP();
 
             _listCompany = _http.GetInfos<Company>(code);
-            if (_listCompany.Count > 0)
+            if (_listCompany.Count == 1)
                 Company = _listCompany[0];
             else
                 Company = null;
         }
 
+        public bool NextCompany()
+        {
+            if (_companyIndex < 0
+                || _companyIndex > _listCompany.Count - 1)
+            {
+                _companyIndex = 0;
+                Company = null;
+                return false;
+            }
+
+            Company = _listCompany[_companyIndex];
+            _companyIndex++;
+            return true;
+        }
     }
 }
