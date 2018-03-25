@@ -10,7 +10,7 @@ namespace OpenDataBotAPI
 {
     internal class HTTP
     {
-        private string _url = "https://opendatabot.com/api/v2";
+        private const string _url = "https://opendatabot.com/api/v2";
         private string _apiKey;
 
         internal HTTP(string apiKey)
