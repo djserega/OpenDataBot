@@ -19,7 +19,7 @@ namespace OpenDataBotAPI
         public string Location { get; set; }
         public string Activities { get; set; }
         public string Status { get; set; }
-        public Beneficiaries Beneficiarie { get; set; }
+        public IBeneficiaries Beneficiarie { get; set; }
         public Beneficiaries[] Beneficiaries
         {
             set

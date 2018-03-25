@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-
-namespace OpenDataBotAPI
+﻿namespace OpenDataBotAPI
 {
     public interface ICompany
     {
-        string Activities { get; set; }
-        string Ceo_name { get; set; }
-        string Code { get; set; }
-        string Full_name { get; set; }
-        string Location { get; set; }
-        string Short_name { get; set; }
-        string Status { get; set; }
-        Beneficiaries Beneficiarie { get; set; }
+        string Activities { get; }
+        string Ceo_name { get; }
+        string Code { get; }
+        string Full_name { get; }
+        string Location { get; }
+        string Short_name { get; }
+        string Status { get; }
+        IBeneficiaries Beneficiarie { get; }
 
         int BeneficiariesCount { get; }
         int BeneficiariesIndex { get; set; }
