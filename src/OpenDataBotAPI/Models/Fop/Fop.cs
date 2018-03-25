@@ -26,16 +26,6 @@ namespace OpenDataBotAPI
         public List<Tax_debts> Tax_debts { get; set; }
     }
 
-    public class Phones
-    {
-        public string Phone { get; set; }
-    }
-
-    public class Additionally_activities
-    {
-        public string Activities { get; set; }
-    }
-
     public class ChangeItem
     {
         public string Date { get; set; }
