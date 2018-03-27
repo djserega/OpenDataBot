@@ -55,9 +55,17 @@
     <Compile Include="Json.cs" />
     <Compile Include="Models\Company\Beneficiaries.cs" />
     <Compile Include="Models\Company\Company.cs" />
+    <Compile Include="Models\Fop\ChangeItem.cs" />
+    <Compile Include="Models\Fop\Changes.cs" />
     <Compile Include="Models\Fop\Fop.cs" />
     <Compile Include="Models\Company\IBeneficiaries.cs" />
     <Compile Include="Models\Company\ICompany.cs" />
+    <Compile Include="Models\Fop\IChangeItem.cs" />
+    <Compile Include="Models\Fop\IChanges.cs" />
+    <Compile Include="Models\Fop\IFop.cs" />
+    <Compile Include="Models\Fop\ITax_debts.cs" />
+    <Compile Include="Models\Fop\Sex.cs" />
+    <Compile Include="Models\Fop\Tax_debts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
