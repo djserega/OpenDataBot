@@ -16,7 +16,7 @@ namespace OpenDataBotAPI
         public string Full_name { get; set; }
         public string Location { get; set; }
         public string Status { get; set; }
-        public List<string> Phones { get; set; }
+        public string[] Phones { get; set; }
         public string Email { get; set; }
         public string Registration_date { get; set; }
         public string Last_date { get; set; }
@@ -27,10 +27,10 @@ namespace OpenDataBotAPI
 
         public Sex Sex { get; set; }
 
-        public List<string> Additionally_activities { get; set; }
+        public string[] Additionally_activities { get; set; }
 
-        public List<ChangeItem> History { get; set; }
+        public ChangeItem[] History { get; set; }
 
-        public List<Tax_debts> Tax_debts { get; set; }
+        public Tax_debts[] Tax_debts { get; set; }
     }
 }

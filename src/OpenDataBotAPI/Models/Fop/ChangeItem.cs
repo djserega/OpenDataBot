@@ -9,6 +9,6 @@ namespace OpenDataBotAPI
     public class ChangeItem : IChangeItem
     {
         public string Date { get; set; }
-        public List<Changes> Changes { get; set; }
+        public IChanges[] Changes { get; set; }
     }
 }

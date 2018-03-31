@@ -4,7 +4,7 @@ namespace OpenDataBotAPI
 {
     public interface IChangeItem
     {
-        List<Changes> Changes { get; }
+        IChanges[] Changes { get; }
         string Date { get; }
     }
 }
