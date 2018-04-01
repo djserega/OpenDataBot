@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OpenDataBotAPI
+﻿namespace OpenDataBotAPI
 {
     public interface IFop
     {
@@ -8,9 +6,12 @@ namespace OpenDataBotAPI
         string[] Additionally_activities { get; }
         string Birth_date { get; }
         string Code { get; }
+        IChangeItem CurrentHistory { get; }
+        ITax_debts CurrentTax_debts { get; }
         string Email { get; }
         string Full_name { get; }
-        ChangeItem[] History { get; }
+        int HistoryCount { get; }
+        int HistoryIndex { get; set; }
         string Last_date { get; }
         string Location { get; }
         string Pdv_code { get; }
@@ -19,6 +20,10 @@ namespace OpenDataBotAPI
         string Registration_date { get; }
         Sex Sex { get; }
         string Status { get; }
-        Tax_debts[] Tax_debts { get; }
+        int Tax_debtsCount { get; }
+        int Tax_debtsIndex { get; set; }
+
+        bool NextHistory();
+        bool NextTax_debts();
     }
 }

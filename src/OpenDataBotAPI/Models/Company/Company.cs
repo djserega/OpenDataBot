@@ -32,7 +32,6 @@ namespace OpenDataBotAPI
                         _listBeneficiaries.Add(item);
             }
         }
-
         private List<Beneficiaries> _listBeneficiaries = new List<Beneficiaries>();
         private int _beneficiariesIndex;
         public int BeneficiariesCount { get { return _listBeneficiaries.Count(); } }
@@ -43,8 +42,8 @@ namespace OpenDataBotAPI
             {
                 if (value < 0)
                     _beneficiariesIndex = 0;
-                else if (value > _listBeneficiaries.Count - 1)
-                    _beneficiariesIndex = _listBeneficiaries.Count;
+                else if (value > BeneficiariesCount - 1)
+                    _beneficiariesIndex = BeneficiariesCount;
                 else
                     _beneficiariesIndex = value;
             }
@@ -52,7 +51,7 @@ namespace OpenDataBotAPI
         public bool NextBeneficiarie()
         {
             if (_beneficiariesIndex < 0
-                || _beneficiariesIndex > _listBeneficiaries.Count - 1)
+                || _beneficiariesIndex > BeneficiariesCount - 1)
             {
                 _beneficiariesIndex = 0;
                 Beneficiarie = null;
