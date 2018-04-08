@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace OpenDataBotAPI
@@ -8,8 +9,7 @@ namespace OpenDataBotAPI
     [ComSourceInterfaces(typeof(IChangeItem))]
     public class ChangeItem : IChangeItem
     {
-        public string Date { get; set; }
-
+        public DateTime Date { get; set; }
         public Changes Changes { get; set; }
     }
 }

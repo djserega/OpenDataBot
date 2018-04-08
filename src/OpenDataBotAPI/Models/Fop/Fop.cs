@@ -18,9 +18,9 @@ namespace OpenDataBotAPI
         public string Status { get; set; }
         public string[] Phones { get; set; }
         public string Email { get; set; }
-        public string Registration_date { get; set; }
-        public string Last_date { get; set; }
-        public string Birth_date { get; set; }
+        public DateTime Registration_date { get; set; }
+        public DateTime Last_date { get; set; }
+        public DateTime Birth_date { get; set; }
         public string Activities { get; set; }
         public string Pdv_code { get; set; }
         public string Pdv_status { get; set; }

@@ -1,8 +1,10 @@
-﻿namespace OpenDataBotAPI
+﻿using System;
+
+namespace OpenDataBotAPI
 {
     public interface ITax_debts
     {
-        string DataBase_date { get; }
+        DateTime DataBase_date { get; }
         string Government { get; }
         string Icon { get; }
         string Local { get; }

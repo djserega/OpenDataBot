@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OpenDataBotAPI
 {
     public interface IChangeItem
     {
-        string Date { get; }
+        DateTime Date { get; }
         Changes Changes { get; }
     }
 }

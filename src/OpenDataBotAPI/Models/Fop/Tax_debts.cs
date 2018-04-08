@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenDataBotAPI
 {
@@ -12,6 +13,6 @@ namespace OpenDataBotAPI
         public string Total { get; set; }
         public string Local { get; set; }
         public string Government { get; set; }
-        public string DataBase_date { get; set; }
+        public DateTime DataBase_date { get; set; }
     }
 }
