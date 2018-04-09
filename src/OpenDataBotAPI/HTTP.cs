@@ -51,7 +51,6 @@ namespace OpenDataBotAPI
             return Json<T>.DeserializeStringToList(response);
         }
 
-
         private WebRequest GetWebRequest(Type type, string param)
         {
             StringBuilder stringBuilder = new StringBuilder(_url);

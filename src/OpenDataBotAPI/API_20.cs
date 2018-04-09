@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace OpenDataBotAPI
 {
@@ -23,7 +24,10 @@ namespace OpenDataBotAPI
             set
             {
                 if (_apiKey != value)
+                {
                     _apiKey = value;
+                    _http = null;
+                }
             }
         }
         public bool APIKeyIsSet
@@ -68,15 +72,27 @@ namespace OpenDataBotAPI
         {
             if (!APIKeyIsSet)
             {
-                Error = true;
-                ErrorText = "Не указан api-ключ";
+                SetError("Не указан api-ключ");
                 return false;
             }
             else
             {
+                SetError();
+                return true;
+            }
+        }
+
+        private void SetError(string text = "")
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
                 Error = false;
                 ErrorText = string.Empty;
-                return true;
+            }
+            else
+            {
+                Error = true;
+                ErrorText = text;
             }
         }
 
@@ -88,7 +104,15 @@ namespace OpenDataBotAPI
 
             InitializeHTTP();
 
-            Fop = _http.GetInfo<Fop>(code);
+            try
+            {
+                Fop = _http.GetInfo<Fop>(code);
+            }
+            catch (WebException ex)
+            {
+
+                SetWebExceptionErrorByType<Fop>(ex);
+            }
         }
 
         public void GetCompany(string code)
@@ -98,11 +122,18 @@ namespace OpenDataBotAPI
 
             InitializeHTTP();
 
-            _listCompany = _http.GetInfos<Company>(code);
-            if (_listCompany.Count == 1)
-                Company = _listCompany[0];
-            else
-                Company = null;
+            try
+            {
+                _listCompany = _http.GetInfos<Company>(code);
+                if (_listCompany.Count == 1)
+                    Company = _listCompany[0];
+                else
+                    Company = null;
+            }
+            catch (WebException ex)
+            {
+                SetWebExceptionErrorByType<Company>(ex);
+            }
         }
 
         public bool NextCompany()
@@ -118,6 +149,35 @@ namespace OpenDataBotAPI
             Company = _listCompany[_companyIndex];
             _companyIndex++;
             return true;
+        }
+
+        private void SetWebExceptionErrorByType<T>(WebException ex)
+        {
+            HttpWebResponse webResponse = (HttpWebResponse)ex.Response;
+
+            Type typeT = typeof(T);
+
+            string textStatus = string.Empty;
+            if (typeT == typeof(Fop))
+            {
+                if (webResponse.StatusCode == HttpStatusCode.NotFound)
+                    textStatus = "ФОП не найден.";
+                else if (webResponse.StatusCode == HttpStatusCode.Forbidden)
+                    textStatus = "Некорректный api-ключ.";
+                else
+                    textStatus = $"ФОП. {ex.Status}. {ex.Message}";
+            }
+            else if (typeT == typeof(Company))
+            {
+                if (webResponse.StatusCode == HttpStatusCode.NotFound)
+                    textStatus = "Компания/компании не найден/ы.";
+                else if (webResponse.StatusCode == HttpStatusCode.Forbidden)
+                    textStatus = "Некорректный api-ключ.";
+                else
+                    textStatus = $"Компания. {ex.Status}. {ex.Message}";
+            }
+
+            SetError($"Ошибка получения информации. {textStatus}");
         }
     }
 }

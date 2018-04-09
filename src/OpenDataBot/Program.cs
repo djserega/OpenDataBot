@@ -11,11 +11,11 @@ namespace OpenDataBot
     {
 
         private static API_20 _openDataBot = new API_20();
-        
+
         static void Main(string[] args)
         {
             int? action = null;
-                
+
             while (action != 0)
             {
                 if (!_openDataBot.APIKeyIsSet)
@@ -47,21 +47,26 @@ namespace OpenDataBot
                             case 1:
                                 Console.WriteLine("Введите ИНН:");
                                 _openDataBot.GetFop(Console.ReadLine());
+                                if (_openDataBot.Error)
+                                    Console.WriteLine(_openDataBot.ErrorText);
                                 Console.WriteLine();
                                 break;
                             case 2:
                                 Console.WriteLine("Введите ЕДРПОУ:");
                                 _openDataBot.GetCompany(Console.ReadLine());
 
-                                while (_openDataBot.NextCompany())
-                                {
-                                    Console.WriteLine(_openDataBot.Company.Full_name);
-                                    Company company = _openDataBot.Company;
-                                    while (company.NextBeneficiarie())
+                                if (_openDataBot.Error)
+                                    Console.WriteLine(_openDataBot.ErrorText);
+                                else
+                                    while (_openDataBot.NextCompany())
                                     {
-                                        Console.WriteLine(company.Beneficiarie.Title);
+                                        Console.WriteLine(_openDataBot.Company.Full_name);
+                                        Company company = _openDataBot.Company;
+                                        while (company.NextBeneficiarie())
+                                        {
+                                            Console.WriteLine(company.Beneficiarie.Title);
+                                        }
                                     }
-                                }
 
                                 Console.WriteLine();
                                 break;
@@ -79,7 +84,7 @@ namespace OpenDataBot
                     }
                 }
             };
-                           
+
         }
 
         private static void WriteListAction()
