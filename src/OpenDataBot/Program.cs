@@ -45,30 +45,13 @@ namespace OpenDataBot
                                 _openDataBot.APIKey = string.Empty;
                                 break;
                             case 1:
-                                Console.WriteLine("Введите ИНН:");
-                                _openDataBot.GetFop(Console.ReadLine());
-                                if (_openDataBot.Error)
-                                    Console.WriteLine(_openDataBot.ErrorText);
-                                Console.WriteLine();
+                                GetInfoFop();
                                 break;
                             case 2:
-                                Console.WriteLine("Введите ЕДРПОУ:");
-                                _openDataBot.GetCompany(Console.ReadLine());
-
-                                if (_openDataBot.Error)
-                                    Console.WriteLine(_openDataBot.ErrorText);
-                                else
-                                    while (_openDataBot.NextCompany())
-                                    {
-                                        Console.WriteLine(_openDataBot.Company.Full_name);
-                                        Company company = _openDataBot.Company;
-                                        while (company.NextBeneficiarie())
-                                        {
-                                            Console.WriteLine(company.Beneficiarie.Title);
-                                        }
-                                    }
-
-                                Console.WriteLine();
+                                GetInfoCompany();
+                                break;
+                            case 3:
+                                GetInfoFullCompany();
                                 break;
                             default:
                                 Console.Clear();
@@ -94,8 +77,46 @@ namespace OpenDataBot
             Console.WriteLine("0 - завершение работы");
             Console.WriteLine("1 - получить данные ФОП");
             Console.WriteLine("2 - получить данные Компании");
+            Console.WriteLine("3 - получить полную информацию о Компании");
         }
 
+        private static void GetInfoFop()
+        {
+            Console.WriteLine("Введите ИНН:");
+            _openDataBot.GetFop(Console.ReadLine());
+            if (_openDataBot.Error)
+                Console.WriteLine(_openDataBot.ErrorText);
+            Console.WriteLine();
+        }
+
+        private static void GetInfoCompany()
+        {
+            Console.WriteLine("Введите ЕДРПОУ:");
+            _openDataBot.GetCompany(Console.ReadLine());
+
+            if (_openDataBot.Error)
+                Console.WriteLine(_openDataBot.ErrorText);
+            else
+                while (_openDataBot.NextCompany())
+                {
+                    Console.WriteLine(_openDataBot.Company.Full_name);
+                    Company company = _openDataBot.Company;
+                    while (company.NextBeneficiaries())
+                    {
+                        Console.WriteLine(company.CurrentBeneficiaries.Title);
+                    }
+                }
+            Console.WriteLine();
+        }
+
+        private static void GetInfoFullCompany()
+        {
+            Console.WriteLine("Введите ЕДРПОУ:");
+            _openDataBot.GetFullCompany(Console.ReadLine());
+            if (_openDataBot.Error)
+                Console.WriteLine(_openDataBot.ErrorText);
+            Console.WriteLine();
+        }
     }
 
 }

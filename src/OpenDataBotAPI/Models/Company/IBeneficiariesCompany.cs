@@ -1,6 +1,6 @@
 ﻿namespace OpenDataBotAPI
 {
-    public interface IBeneficiaries
+    public interface IBeneficiariesCompany
     {
         string Capital { get; }
         string Location { get; }

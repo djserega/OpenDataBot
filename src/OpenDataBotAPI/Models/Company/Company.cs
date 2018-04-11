@@ -10,29 +10,22 @@ namespace OpenDataBotAPI
     [Guid("65644E49-712B-4DFB-B9A0-ABBE9F140333")]
     [ClassInterface(ClassInterfaceType.None)]
     [ComSourceInterfaces(typeof(ICompany))]
-    public class Company : ICompany
+    public class Company : BaseCompany, ICompany
     {
-        public string Full_name { get; set; }
-        public string Short_name { get; set; }
-        public string Code { get; set; }
-        public string Ceo_name { get; set; }
-        public string Location { get; set; }
         public string Activities { get; set; }
-        public string Status { get; set; }
 
-        public IBeneficiaries Beneficiarie { get; set; }
-
-        public Beneficiaries[] Beneficiaries
+        public IBeneficiariesCompany CurrentBeneficiaries { get; set; }
+        public BeneficiariesCompany[] Beneficiaries
         {
             set
             {
                 _listBeneficiaries.Clear();
                 if (value != null)
-                    foreach (Beneficiaries item in value)
+                    foreach (BeneficiariesCompany item in value)
                         _listBeneficiaries.Add(item);
             }
         }
-        private List<Beneficiaries> _listBeneficiaries = new List<Beneficiaries>();
+        private List<BeneficiariesCompany> _listBeneficiaries = new List<BeneficiariesCompany>();
         private int _beneficiariesIndex;
         public int BeneficiariesCount { get { return _listBeneficiaries.Count(); } }
         public int BeneficiariesIndex
@@ -48,20 +41,19 @@ namespace OpenDataBotAPI
                     _beneficiariesIndex = value;
             }
         }
-        public bool NextBeneficiarie()
+        public bool NextBeneficiaries()
         {
             if (_beneficiariesIndex < 0
                 || _beneficiariesIndex > BeneficiariesCount - 1)
             {
                 _beneficiariesIndex = 0;
-                Beneficiarie = null;
+                CurrentBeneficiaries = null;
                 return false;
             }
 
-            Beneficiarie = _listBeneficiaries[_beneficiariesIndex];
+            CurrentBeneficiaries = _listBeneficiaries[_beneficiariesIndex];
             _beneficiariesIndex++;
             return true;
         }
-
     }
 }

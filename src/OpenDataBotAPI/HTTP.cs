@@ -21,6 +21,8 @@ namespace OpenDataBotAPI
 
         internal T GetInfo<T>(string param) where T : class, new()
         {
+            return Json<T>.DeserializeString(new StreamReader(@"F:\C#\GitHub\OpenDataBot\fcompany2.txt").ReadToEnd());
+
             WebRequest webRequest = GetWebRequest(typeof(T), param);
 
             WebResponse webResponse = webRequest.GetResponse();
@@ -59,6 +61,8 @@ namespace OpenDataBotAPI
                 stringBuilder.Append("/company/");
             else if (type == typeof(Fop))
                 stringBuilder.Append("/fop/");
+            else if (type == typeof(FullCompany))
+                stringBuilder.Append("/fullcompany/");
             else
                 return null;
 

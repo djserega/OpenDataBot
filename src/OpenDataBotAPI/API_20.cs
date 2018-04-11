@@ -15,8 +15,6 @@ namespace OpenDataBotAPI
     {
         private string _apiKey;
         private HTTP _http;
-        private List<Company> _listCompany = new List<Company>();
-        private int _companyIndex;
 
 
         public string APIKey
@@ -34,28 +32,6 @@ namespace OpenDataBotAPI
         {
             get { return !string.IsNullOrWhiteSpace(_apiKey); }
         }
-
-        public bool Error { get; private set; }
-        public string ErrorText { get; private set; }
-
-
-        public Fop Fop { get; private set; }
-        public Company Company { get; private set; }
-        public int CompanyCount { get { return _listCompany.Count; } }
-        public int CompanyIndex
-        {
-            get { return _companyIndex; }
-            set
-            {
-                if (value < 0)
-                    _companyIndex = 0;
-                else if (value > _listCompany.Count - 1)
-                    _companyIndex = _listCompany.Count;
-                else
-                    _companyIndex = value;
-            }
-        }
-
 
         public API_20()
         {
@@ -82,20 +58,7 @@ namespace OpenDataBotAPI
             }
         }
 
-        private void SetError(string text = "")
-        {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                Error = false;
-                ErrorText = string.Empty;
-            }
-            else
-            {
-                Error = true;
-                ErrorText = text;
-            }
-        }
-
+        #region API
 
         public void GetFop(string code)
         {
@@ -110,10 +73,15 @@ namespace OpenDataBotAPI
             }
             catch (WebException ex)
             {
-
                 SetWebExceptionErrorByType<Fop>(ex);
             }
         }
+
+        #region Fop
+
+        public Fop Fop { get; private set; }
+
+        #endregion
 
         public void GetCompany(string code)
         {
@@ -136,6 +104,25 @@ namespace OpenDataBotAPI
             }
         }
 
+        #region Company
+
+        public Company Company { get; private set; }
+        private List<Company> _listCompany = new List<Company>();
+        private int _companyIndex;
+        public int CompanyCount { get { return _listCompany.Count; } }
+        public int CompanyIndex
+        {
+            get { return _companyIndex; }
+            set
+            {
+                if (value < 0)
+                    _companyIndex = 0;
+                else if (value > _listCompany.Count - 1)
+                    _companyIndex = _listCompany.Count;
+                else
+                    _companyIndex = value;
+            }
+        }
         public bool NextCompany()
         {
             if (_companyIndex < 0
@@ -149,6 +136,52 @@ namespace OpenDataBotAPI
             Company = _listCompany[_companyIndex];
             _companyIndex++;
             return true;
+        }
+
+        #endregion
+
+        public void GetFullCompany(string code)
+        {
+            if (!CheckFilledAPIKey())
+                return;
+
+            InitializeHTTP();
+
+            try
+            {
+                FullCompany = _http.GetInfo<FullCompany>(code);
+            }
+            catch (WebException ex)
+            {
+                SetWebExceptionErrorByType<FullCompany>(ex);
+            }
+        }
+
+        #region FullCompany
+
+        public FullCompany FullCompany { get; private set; }
+
+        #endregion
+
+        #endregion
+
+        #region Errors
+
+        public bool Error { get; private set; }
+        public string ErrorText { get; private set; }
+
+        private void SetError(string text = "")
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                Error = false;
+                ErrorText = string.Empty;
+            }
+            else
+            {
+                Error = true;
+                ErrorText = text;
+            }
         }
 
         private void SetWebExceptionErrorByType<T>(WebException ex)
@@ -179,5 +212,8 @@ namespace OpenDataBotAPI
 
             SetError($"Ошибка получения информации. {textStatus}");
         }
+
+        #endregion
+
     }
 }
