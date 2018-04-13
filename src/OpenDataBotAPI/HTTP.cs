@@ -21,8 +21,6 @@ namespace OpenDataBotAPI
 
         internal T GetInfo<T>(string param) where T : class, new()
         {
-            return Json<T>.DeserializeString(new StreamReader(@"F:\C#\GitHub\OpenDataBot\fcompany2.txt").ReadToEnd());
-
             WebRequest webRequest = GetWebRequest(typeof(T), param);
 
             WebResponse webResponse = webRequest.GetResponse();
