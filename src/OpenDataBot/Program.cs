@@ -59,6 +59,9 @@ namespace OpenDataBot
                                 break;
                         }
 
+                        if (_openDataBot.Error)
+                            Console.WriteLine(_openDataBot.ErrorText);
+
                     }
                     catch (Exception ex)
                     {
@@ -84,8 +87,8 @@ namespace OpenDataBot
         {
             Console.WriteLine("Введите ИНН:");
             _openDataBot.GetFop(Console.ReadLine());
-            if (_openDataBot.Error)
-                Console.WriteLine(_openDataBot.ErrorText);
+            if (!_openDataBot.Error)
+                Console.WriteLine(_openDataBot.Fop.Full_name);
             Console.WriteLine();
         }
 
@@ -94,17 +97,13 @@ namespace OpenDataBot
             Console.WriteLine("Введите ЕДРПОУ:");
             _openDataBot.GetCompany(Console.ReadLine());
 
-            if (_openDataBot.Error)
-                Console.WriteLine(_openDataBot.ErrorText);
-            else
+            if (!_openDataBot.Error)
                 while (_openDataBot.NextCompany())
                 {
                     Console.WriteLine(_openDataBot.Company.Full_name);
                     Company company = _openDataBot.Company;
                     while (company.NextBeneficiaries())
-                    {
                         Console.WriteLine(company.CurrentBeneficiaries.Title);
-                    }
                 }
             Console.WriteLine();
         }
@@ -113,9 +112,8 @@ namespace OpenDataBot
         {
             Console.WriteLine("Введите ЕДРПОУ:");
             _openDataBot.GetFullCompany(Console.ReadLine());
-            if (_openDataBot.Error)
-                Console.WriteLine(_openDataBot.ErrorText);
-            Console.WriteLine();
+            if  (!_openDataBot.Error)
+                Console.WriteLine(_openDataBot.FullCompany.Full_name);
         }
     }
 
