@@ -61,6 +61,8 @@ namespace OpenDataBotAPI
                 stringBuilder.Append("/fop/");
             else if (type == typeof(FullCompany))
                 stringBuilder.Append("/fullcompany/");
+            else if (type == typeof(ChangesCompany))
+                stringBuilder.Append("/changes/");
             else
                 return null;
 

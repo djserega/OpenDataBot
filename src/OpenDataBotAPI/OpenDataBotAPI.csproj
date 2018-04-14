@@ -53,6 +53,7 @@
     <Compile Include="IAPI_20.cs" />
     <Compile Include="IAPI_20Events.cs" />
     <Compile Include="Json.cs" />
+    <Compile Include="Models\ChangesCompany\ChangesCompany.cs" />
     <Compile Include="Models\Common\BaseCompany.cs" />
     <Compile Include="Models\Company\BeneficiariesCompany.cs" />
     <Compile Include="Models\Company\Company.cs" />

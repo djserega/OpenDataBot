@@ -60,6 +60,8 @@ namespace OpenDataBotAPI
 
         #region API
 
+        public Fop Fop { get; private set; }
+
         public void GetFop(string code)
         {
             if (!CheckFilledAPIKey())
@@ -77,34 +79,6 @@ namespace OpenDataBotAPI
             }
         }
 
-        #region Fop
-
-        public Fop Fop { get; private set; }
-
-        #endregion
-
-        public void GetCompany(string code)
-        {
-            if (!CheckFilledAPIKey())
-                return;
-
-            InitializeHTTP();
-
-            try
-            {
-                _listCompany = _http.GetInfos<Company>(code);
-                if (_listCompany.Count == 1)
-                    Company = _listCompany[0];
-                else
-                    Company = null;
-            }
-            catch (WebException ex)
-            {
-                SetWebExceptionErrorByType<Company>(ex);
-            }
-        }
-
-        #region Company
 
         public Company Company { get; private set; }
         private List<Company> _listCompany = new List<Company>();
@@ -138,7 +112,29 @@ namespace OpenDataBotAPI
             return true;
         }
 
-        #endregion
+        public void GetCompany(string code)
+        {
+            if (!CheckFilledAPIKey())
+                return;
+
+            InitializeHTTP();
+
+            try
+            {
+                _listCompany = _http.GetInfos<Company>(code);
+                if (_listCompany.Count == 1)
+                    Company = _listCompany[0];
+                else
+                    Company = null;
+            }
+            catch (WebException ex)
+            {
+                SetWebExceptionErrorByType<Company>(ex);
+            }
+        }
+
+
+        public FullCompany FullCompany { get; private set; }
 
         public void GetFullCompany(string code)
         {
@@ -157,11 +153,26 @@ namespace OpenDataBotAPI
             }
         }
 
-        #region FullCompany
 
-        public FullCompany FullCompany { get; private set; }
+        public ChangesCompany CurrentChanges { get; private set; }
+        public List<ChangesCompany> Changes { get; private set; }
 
-        #endregion
+        public void GetChanges(string code)
+        {
+            if (!CheckFilledAPIKey())
+                return;
+
+            InitializeHTTP();
+
+            try
+            {
+                Changes = _http.GetInfos<ChangesCompany>(code);
+            }
+            catch (WebException ex)
+            {
+                SetWebExceptionErrorByType<ChangesCompany>(ex);
+            }
+        }
 
         #endregion
 
@@ -201,6 +212,15 @@ namespace OpenDataBotAPI
                     textStatus = $"ФОП. {ex.Status}. {ex.Message}";
             }
             else if (typeT == typeof(Company))
+            {
+                if (webResponse.StatusCode == HttpStatusCode.NotFound)
+                    textStatus = "Компания/компании не найден/ы.";
+                else if (webResponse.StatusCode == HttpStatusCode.Forbidden)
+                    textStatus = "Некорректный api-ключ.";
+                else
+                    textStatus = $"Компания. {ex.Status}. {ex.Message}";
+            }
+            else if (typeT == typeof(ChangesCompany))
             {
                 if (webResponse.StatusCode == HttpStatusCode.NotFound)
                     textStatus = "Компания/компании не найден/ы.";

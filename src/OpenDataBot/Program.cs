@@ -53,6 +53,9 @@ namespace OpenDataBot
                             case 3:
                                 GetInfoFullCompany();
                                 break;
+                            case 4:
+                                GetInfoChanges();
+                                break;
                             default:
                                 Console.Clear();
                                 Console.WriteLine("Ошибка определения действия.");
@@ -81,6 +84,7 @@ namespace OpenDataBot
             Console.WriteLine("1 - получить данные ФОП");
             Console.WriteLine("2 - получить данные Компании");
             Console.WriteLine("3 - получить полную информацию о Компании");
+            Console.WriteLine("4 - изменения компании");
         }
 
         private static void GetInfoFop()
@@ -115,6 +119,13 @@ namespace OpenDataBot
             if  (!_openDataBot.Error)
                 Console.WriteLine(_openDataBot.FullCompany.Full_name);
         }
-    }
 
+        private static void GetInfoChanges()
+        {
+            Console.WriteLine("Введите ЕДРПОУ:");
+            _openDataBot.GetChanges(Console.ReadLine());
+            if (!_openDataBot.Error)
+                Console.WriteLine(_openDataBot.CurrentChanges.Code);
+        }
+    }
 }
