@@ -7,7 +7,7 @@ namespace OpenDataBotAPI
     public class BeneficiariesCompany : IBeneficiariesCompany
     {
         public string Title { get; set; }
-        public string Capital { get; set; }
+        public long Capital { get; set; }
         public string Location { get; set; }
     }
 }

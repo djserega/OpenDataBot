@@ -10,7 +10,7 @@ namespace OpenDataBotAPI
     {
         public string Email { get; set; }
         public DateTime Registration_date { get; set; }
-        public int Capital { get; set; }
+        public long Capital { get; set; }
 
         public IHeads CurrentHeads { get; set; }
         public Heads[] Heads

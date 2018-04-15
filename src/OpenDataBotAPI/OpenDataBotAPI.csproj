@@ -39,6 +39,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,21 +67,33 @@
     <Compile Include="Models\Common\IChanges.cs" />
     <Compile Include="Models\Fop\IFop.cs" />
     <Compile Include="Models\Common\ITax_debts.cs" />
-    <Compile Include="Models\Fop\Sex.cs" />
+    <Compile Include="Models\Common\Sex.cs" />
     <Compile Include="Models\Common\Tax_debts.cs" />
     <Compile Include="Models\FullCompany\Activities.cs" />
     <Compile Include="Models\FullCompany\BeneficiaresFullCompany.cs" />
     <Compile Include="Models\FullCompany\Courts.cs" />
     <Compile Include="Models\FullCompany\Decision.cs" />
     <Compile Include="Models\FullCompany\Fullcompany.cs" />
-    <Compile Include="Models\FullCompany\Heads.cs" />
+    <Compile Include="Models\Common\Heads.cs" />
     <Compile Include="Models\FullCompany\IActivities.cs" />
     <Compile Include="Models\FullCompany\IBeneficiaresFullCompany.cs" />
     <Compile Include="Models\FullCompany\ICourts.cs" />
     <Compile Include="Models\FullCompany\IDecision.cs" />
-    <Compile Include="Models\FullCompany\IHeads.cs" />
+    <Compile Include="Models\Common\IHeads.cs" />
     <Compile Include="Models\FullCompany\IWarnings.cs" />
     <Compile Include="Models\FullCompany\Warnings.cs" />
+    <Compile Include="Models\Personal\Debt_status.cs" />
+    <Compile Include="Models\Personal\FopPersons.cs" />
+    <Compile Include="Models\Personal\Personal.cs" />
+    <Compile Include="Models\Personal\PersonalBeneficiaries.cs" />
+    <Compile Include="Models\Personal\PersonalCeo.cs" />
+    <Compile Include="Models\Personal\PersonalCompany.cs" />
+    <Compile Include="Models\Personal\PersonalFop.cs" />
+    <Compile Include="Models\Personal\PersonalSessions.cs" />
+    <Compile Include="Models\Personal\PersonalWanted.cs" />
+    <Compile Include="Models\Personal\Persons.cs" />
+    <Compile Include="Models\Personal\Sessions.cs" />
+    <Compile Include="Models\Personal\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

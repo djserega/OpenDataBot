@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Text.RegularExpressions;
 
 namespace OpenDataBotAPI
 {
@@ -77,6 +80,10 @@ namespace OpenDataBotAPI
             {
                 SetWebExceptionErrorByType<Fop>(ex);
             }
+            catch (Exception ex)
+            {
+                SetError(ex.Message);
+            }
         }
 
 
@@ -131,6 +138,10 @@ namespace OpenDataBotAPI
             {
                 SetWebExceptionErrorByType<Company>(ex);
             }
+            catch (Exception ex)
+            {
+                SetError(ex.Message);
+            }
         }
 
 
@@ -150,6 +161,10 @@ namespace OpenDataBotAPI
             catch (WebException ex)
             {
                 SetWebExceptionErrorByType<FullCompany>(ex);
+            }
+            catch (Exception ex)
+            {
+                SetError(ex.Message);
             }
         }
 
@@ -172,8 +187,33 @@ namespace OpenDataBotAPI
             {
                 SetWebExceptionErrorByType<ChangesCompany>(ex);
             }
+            catch (Exception ex)
+            {
+                SetError(ex.Message);
+            }
         }
 
+        public Personal Personal { get; private set; }
+        public void GetPersonalInfo(string pib)
+        {
+            if (!CheckFilledAPIKey())
+                return;
+
+            InitializeHTTP();
+
+            try
+            {
+                Personal = _http.GetInfo<Personal>(WebUtility.UrlEncode(pib).Replace("+", "%20"));
+            }
+            catch (WebException ex)
+            {
+                SetWebExceptionErrorByType<Personal>(ex);
+            }
+            catch (Exception ex)
+            {
+                SetError(ex.Message);
+            }
+        }
         #endregion
 
         #region Errors
@@ -204,33 +244,69 @@ namespace OpenDataBotAPI
             string textStatus = string.Empty;
             if (typeT == typeof(Fop))
             {
-                if (webResponse.StatusCode == HttpStatusCode.NotFound)
-                    textStatus = "ФОП не найден.";
-                else if (webResponse.StatusCode == HttpStatusCode.Forbidden)
-                    textStatus = "Некорректный api-ключ.";
-                else
-                    textStatus = $"ФОП. {ex.Status}. {ex.Message}";
+                switch (webResponse.StatusCode)
+                {
+                    case HttpStatusCode.Forbidden:
+                        textStatus = "Некорректный api-ключ.";
+                        break;
+                    case HttpStatusCode.NotFound:
+                        textStatus = "ФОП не найден.";
+                        break;
+                    default:
+                        textStatus = $"ФОП. {ex.Status}. {ex.Message}";
+                        break;
+                }
             }
             else if (typeT == typeof(Company))
             {
-                if (webResponse.StatusCode == HttpStatusCode.NotFound)
-                    textStatus = "Компания/компании не найден/ы.";
-                else if (webResponse.StatusCode == HttpStatusCode.Forbidden)
-                    textStatus = "Некорректный api-ключ.";
-                else
-                    textStatus = $"Компания. {ex.Status}. {ex.Message}";
+                switch (webResponse.StatusCode)
+                {
+                    case HttpStatusCode.Forbidden:
+                        textStatus = "Некорректный api-ключ.";
+                        break;
+                    case HttpStatusCode.NotFound:
+                        textStatus = "Компания/компании не найден/ы.";
+                        break;
+                    default:
+                        textStatus = $"Компания. {ex.Status}. {ex.Message}";
+                        break;
+                }
             }
             else if (typeT == typeof(ChangesCompany))
             {
-                if (webResponse.StatusCode == HttpStatusCode.NotFound)
-                    textStatus = "Компания/компании не найден/ы.";
-                else if (webResponse.StatusCode == HttpStatusCode.Forbidden)
-                    textStatus = "Некорректный api-ключ.";
-                else
-                    textStatus = $"Компания. {ex.Status}. {ex.Message}";
+                switch (webResponse.StatusCode)
+                {
+                    case HttpStatusCode.Forbidden:
+                        textStatus = "Некорректный api-ключ.";
+                        break;
+                    case HttpStatusCode.NotFound:
+                        textStatus = "Компания/компании не найден/ы.";
+                        break;
+                    default:
+                        textStatus = $"Компания. {ex.Status}. {ex.Message}";
+                        break;
+                }
+            }
+            else if (typeT == typeof(Personal))
+            {
+                switch (webResponse.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        textStatus = "Ошибка в параметре ФИО.";
+                        break;
+                    case HttpStatusCode.Forbidden:
+                        textStatus = "Некорректный api-ключ.";
+                        break;
+                    case HttpStatusCode.NotFound:
+                        textStatus = "Персональная информация не найдена.";
+                        break;
+                    default:
+                        textStatus = $"Персональная информация. {ex.Status}. {ex.Message}";
+                        break;
+                }
             }
 
-            SetError($"Ошибка получения информации. {textStatus}");
+            SetError($"Ошибка получения информации.\n{textStatus}");
         }
 
         #endregion

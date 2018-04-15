@@ -17,11 +17,14 @@ namespace OpenDataBotAPI
         {
             _apiKey = apiKey;
         }
- 
+
+        private Type _typeT;
 
         internal T GetInfo<T>(string param) where T : class, new()
         {
-            WebRequest webRequest = GetWebRequest(typeof(T), param);
+            _typeT = typeof(T);
+
+            WebRequest webRequest = GetWebRequest(param);
 
             WebResponse webResponse = webRequest.GetResponse();
 
@@ -36,7 +39,9 @@ namespace OpenDataBotAPI
 
         internal List<T> GetInfos<T>(string param) where T : class, new()
         {
-            WebRequest webRequest = GetWebRequest(typeof(T), param);
+            _typeT = typeof(T);
+
+            WebRequest webRequest = GetWebRequest(param);
             if (webRequest == null)
                 return null;
 
@@ -51,24 +56,34 @@ namespace OpenDataBotAPI
             return Json<T>.DeserializeStringToList(response);
         }
 
-        private WebRequest GetWebRequest(Type type, string param)
+        private WebRequest GetWebRequest(string param)
         {
             StringBuilder stringBuilder = new StringBuilder(_url);
 
-            if (type == typeof(Company))
+            if (_typeT == typeof(Company))
                 stringBuilder.Append("/company/");
-            else if (type == typeof(Fop))
+            else if (_typeT == typeof(Fop))
                 stringBuilder.Append("/fop/");
-            else if (type == typeof(FullCompany))
+            else if (_typeT == typeof(FullCompany))
                 stringBuilder.Append("/fullcompany/");
-            else if (type == typeof(ChangesCompany))
+            else if (_typeT == typeof(ChangesCompany))
                 stringBuilder.Append("/changes/");
+            else if (_typeT == typeof(Personal))
+                stringBuilder.Append("/person");
             else
                 return null;
 
-            stringBuilder.Append(param);
+            if (_typeT != typeof(Personal))
+                stringBuilder.Append(param);
+
             stringBuilder.Append("?apiKey=");
             stringBuilder.Append(_apiKey);
+
+            if (_typeT == typeof(Personal))
+            {
+                stringBuilder.Append("&pib=");
+                stringBuilder.Append(param);
+            }
 
             WebRequest webRequest = WebRequest.Create(stringBuilder.ToString());
             webRequest.Method = "get";

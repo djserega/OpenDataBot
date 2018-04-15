@@ -56,13 +56,18 @@ namespace OpenDataBot
                             case 4:
                                 GetInfoChanges();
                                 break;
+                            case 5:
+                                GetPersonalInfo();
+                                break;
                             default:
                                 Console.Clear();
                                 Console.WriteLine("Ошибка определения действия.");
                                 break;
                         }
 
-                        if (_openDataBot.Error)
+                        if (_openDataBot.Error
+                            && action != null
+                            && action != -1)
                             Console.WriteLine(_openDataBot.ErrorText);
 
                     }
@@ -81,10 +86,11 @@ namespace OpenDataBot
             Console.WriteLine("Доступные действия:");
             Console.WriteLine("-1 - ввести apikey");
             Console.WriteLine("0 - завершение работы");
-            Console.WriteLine("1 - получить данные ФОП");
-            Console.WriteLine("2 - получить данные Компании");
-            Console.WriteLine("3 - получить полную информацию о Компании");
+            Console.WriteLine("1 - данные ФОП");
+            Console.WriteLine("2 - данные Компании");
+            Console.WriteLine("3 - полная информация о Компании");
             Console.WriteLine("4 - изменения компании");
+            Console.WriteLine("5 - персональная информацияю");
         }
 
         private static void GetInfoFop()
@@ -126,6 +132,13 @@ namespace OpenDataBot
             _openDataBot.GetChanges(Console.ReadLine());
             if (!_openDataBot.Error)
                 Console.WriteLine(_openDataBot.CurrentChanges.Code);
+        }
+
+        private static void GetPersonalInfo()
+        {
+            Console.WriteLine("Введите ФИО:");
+            Console.InputEncoding = Encoding.Default;
+            _openDataBot.GetPersonalInfo(Console.ReadLine());
         }
     }
 }

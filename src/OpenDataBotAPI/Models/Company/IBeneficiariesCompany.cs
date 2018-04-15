@@ -2,7 +2,7 @@
 {
     public interface IBeneficiariesCompany
     {
-        string Capital { get; }
+        long Capital { get; }
         string Location { get; }
         string Title { get; }
     }

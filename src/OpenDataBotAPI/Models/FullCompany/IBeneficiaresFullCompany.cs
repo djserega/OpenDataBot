@@ -4,6 +4,6 @@
     {
         string Name { get; set; }
         string Role { get; set; }
-        int Amount { get; set; }
+        long Amount { get; set; }
     }
 }
