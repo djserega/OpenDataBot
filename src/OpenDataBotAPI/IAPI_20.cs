@@ -16,10 +16,16 @@ namespace OpenDataBotAPI
         Company Company { get; }
         int CompanyCount { get; }
         int CompanyIndex { get; set; }
+        FullCompany FullCompany { get; }
+        ChangesCompany CurrentChanges { get; }
+        Personal Personal { get; }
 
 
         void GetFop(string code);
         void GetCompany(string code);
+        void GetFullCompany(string code);
+        void GetChanges(string code);
+        void GetPersonalInfo(string pib);
 
         bool NextCompany();
     }

@@ -75,6 +75,7 @@
     <Compile Include="Models\FullCompany\FullCompanyDecision.cs" />
     <Compile Include="Models\FullCompany\Fullcompany.cs" />
     <Compile Include="Models\Common\Heads.cs" />
+    <Compile Include="Models\FullCompany\IFullCompany.cs" />
     <Compile Include="Models\FullCompany\IFullCompanyActivities.cs" />
     <Compile Include="Models\FullCompany\IFullCompanyBeneficiares.cs" />
     <Compile Include="Models\FullCompany\IFullCompanyCourts.cs" />

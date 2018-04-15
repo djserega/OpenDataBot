@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenDataBotAPI
 {
-    public class FullCompany : BaseCompany
+    [Guid("81FA0CBD-B71A-4A72-95D8-D8698A201BD6")]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ComSourceInterfaces(typeof(IFullCompany))]
+    public class FullCompany : BaseCompany, IFullCompany
     {
         public string Email { get; set; }
         public DateTime Registration_date { get; set; }
