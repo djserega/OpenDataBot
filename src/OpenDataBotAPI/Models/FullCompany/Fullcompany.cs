@@ -54,18 +54,18 @@ namespace OpenDataBotAPI
             return true;
         }
 
-        public IActivities CurrentActivities { get; set; }
-        public Activities[] Activities
+        public IFullCompanyActivities CurrentActivities { get; set; }
+        public FullCompanyActivities[] Activities
         {
             set
             {
                 _listActivities.Clear();
                 if (value != null)
-                    foreach (Activities item in value)
+                    foreach (FullCompanyActivities item in value)
                         _listActivities.Add(item);
             }
         }
-        private List<Activities> _listActivities = new List<Activities>();
+        private List<FullCompanyActivities> _listActivities = new List<FullCompanyActivities>();
         private int _activitiesIndex;
         public int ActivitiesCount { get { return _listActivities.Count; } }
         public int ActivitiesIndex
@@ -99,18 +99,18 @@ namespace OpenDataBotAPI
         public DateTime Last_time { get; set; }
         public string Phones { get; set; }
 
-        public IBeneficiaresFullCompany CurrentBeneficiaries { get; set; }
-        public BeneficiaresFullCompany[] Beneficiaries
+        public IFullCompanyBeneficiares CurrentBeneficiaries { get; set; }
+        public FullCompanyBeneficiares[] Beneficiaries
         {
             set
             {
                 _listBeneficiaries.Clear();
                 if (value != null)
-                    foreach (BeneficiaresFullCompany item in value)
+                    foreach (FullCompanyBeneficiares item in value)
                         _listBeneficiaries.Add(item);
             }
         }
-        private List<BeneficiaresFullCompany> _listBeneficiaries = new List<BeneficiaresFullCompany>();
+        private List<FullCompanyBeneficiares> _listBeneficiaries = new List<FullCompanyBeneficiares>();
         private int _beneficiariesIndex;
         public int BeneficiariesCount { get { return _listBeneficiaries.Count; } }
         public int BeneficiariesIndex

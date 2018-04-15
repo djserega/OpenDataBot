@@ -9,7 +9,7 @@
         string Location { get; }
         string Short_name { get; }
         string Status { get; }
-        IBeneficiariesCompany CurrentBeneficiaries { get; }
+        ICompanyBeneficiaries CurrentBeneficiaries { get; }
 
         int BeneficiariesCount { get; }
         int BeneficiariesIndex { get; set; }

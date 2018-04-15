@@ -1,6 +1,6 @@
 ﻿namespace OpenDataBotAPI
 {
-    public interface IBeneficiaresFullCompany
+    public interface IFullCompanyBeneficiares
     {
         string Name { get; set; }
         string Role { get; set; }

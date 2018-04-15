@@ -2,7 +2,7 @@
 
 namespace OpenDataBotAPI
 {
-    public interface IDecision
+    public interface IFullCompanyDecision
     {
         string Number { get; }
         string Type { get; }

@@ -14,18 +14,18 @@ namespace OpenDataBotAPI
     {
         public string Activities { get; set; }
 
-        public IBeneficiariesCompany CurrentBeneficiaries { get; set; }
-        public BeneficiariesCompany[] Beneficiaries
+        public ICompanyBeneficiaries CurrentBeneficiaries { get; set; }
+        public CompanyBeneficiaries[] Beneficiaries
         {
             set
             {
                 _listBeneficiaries.Clear();
                 if (value != null)
-                    foreach (BeneficiariesCompany item in value)
+                    foreach (CompanyBeneficiaries item in value)
                         _listBeneficiaries.Add(item);
             }
         }
-        private List<BeneficiariesCompany> _listBeneficiaries = new List<BeneficiariesCompany>();
+        private List<CompanyBeneficiaries> _listBeneficiaries = new List<CompanyBeneficiaries>();
         private int _beneficiariesIndex;
         public int BeneficiariesCount { get { return _listBeneficiaries.Count(); } }
         public int BeneficiariesIndex

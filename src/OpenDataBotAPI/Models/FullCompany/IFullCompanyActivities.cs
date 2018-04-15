@@ -1,6 +1,6 @@
 ﻿namespace OpenDataBotAPI
 {
-    public interface IActivities
+    public interface IFullCompanyActivities
     {
         string Name { get; }
         bool Is_primary { get; }

@@ -182,6 +182,10 @@ namespace OpenDataBotAPI
             try
             {
                 Changes = _http.GetInfos<ChangesCompany>(code);
+                if (Changes.Count == 1)
+                    CurrentChanges = Changes[0];
+                else
+                    CurrentChanges = null;
             }
             catch (WebException ex)
             {
