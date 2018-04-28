@@ -63,6 +63,7 @@ namespace OpenDataBotAPI
 
         #region API
 
+        // FOP
         public Fop Fop { get; private set; }
 
         public void GetFop(string code)
@@ -85,8 +86,8 @@ namespace OpenDataBotAPI
                 SetError(ex.Message);
             }
         }
-
-
+        
+        // COMPANY
         public Company Company { get; private set; }
         private List<Company> _listCompany = new List<Company>();
         private int _companyIndex;
@@ -98,8 +99,8 @@ namespace OpenDataBotAPI
             {
                 if (value < 0)
                     _companyIndex = 0;
-                else if (value > _listCompany.Count - 1)
-                    _companyIndex = _listCompany.Count;
+                else if (value > CompanyCount - 1)
+                    _companyIndex = CompanyCount;
                 else
                     _companyIndex = value;
             }
@@ -107,7 +108,7 @@ namespace OpenDataBotAPI
         public bool NextCompany()
         {
             if (_companyIndex < 0
-                || _companyIndex > _listCompany.Count - 1)
+                || _companyIndex > CompanyCount - 1)
             {
                 _companyIndex = 0;
                 Company = null;
@@ -144,7 +145,7 @@ namespace OpenDataBotAPI
             }
         }
 
-
+        // FULLCOMPANY
         public FullCompany FullCompany { get; private set; }
 
         public void GetFullCompany(string code)
@@ -168,10 +169,39 @@ namespace OpenDataBotAPI
             }
         }
 
+        // CHANGES
+        public ChangesCompany Changes { get; private set; }
+        private List<ChangesCompany> _listChanges = new List<ChangesCompany>();
+        private int _changesIndex;
+        public int ChangesCount { get { return _listChanges.Count; } }
+        public int ChangesIndex
+        {
+            get { return _changesIndex; }
+            set
+            {
+                if (value < 0)
+                    _changesIndex = 0;
+                else if (value > ChangesCount - 1)
+                    _changesIndex = ChangesCount;
+                else
+                    _changesIndex = value;
+            }
+        }
+        public bool NextChanges()
+        {
+            if (_changesIndex < 0
+                || _changesIndex > ChangesCount - 1)
+            {
+                _changesIndex = 0;
+                Changes = null;
+                return false;
+            }
 
-        public ChangesCompany CurrentChanges { get; private set; }
-        public List<ChangesCompany> Changes { get; private set; }
-
+            Changes = _listChanges[_changesIndex];
+            _changesIndex++;
+            return true;
+        }
+                            
         public void GetChanges(string code)
         {
             if (!CheckFilledAPIKey())
@@ -181,11 +211,11 @@ namespace OpenDataBotAPI
 
             try
             {
-                Changes = _http.GetInfos<ChangesCompany>(code);
-                if (Changes.Count == 1)
-                    CurrentChanges = Changes[0];
+                _listChanges = _http.GetInfos<ChangesCompany>(code);
+                if (_listChanges.Count == 1)
+                    Changes = _listChanges[0];
                 else
-                    CurrentChanges = null;
+                    Changes = null;
             }
             catch (WebException ex)
             {
@@ -197,6 +227,7 @@ namespace OpenDataBotAPI
             }
         }
 
+        // PERSONAL
         public Personal Personal { get; private set; }
         public void GetPersonalInfo(string pib)
         {

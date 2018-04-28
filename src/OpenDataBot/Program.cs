@@ -131,7 +131,7 @@ namespace OpenDataBot
             Console.WriteLine("Введите ЕДРПОУ:");
             _openDataBot.GetChanges(Console.ReadLine());
             if (!_openDataBot.Error)
-                Console.WriteLine(_openDataBot.CurrentChanges.Code);
+                Console.WriteLine(_openDataBot.Changes.Code);
         }
 
         private static void GetPersonalInfo()

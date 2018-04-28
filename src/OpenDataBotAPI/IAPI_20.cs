@@ -17,7 +17,7 @@ namespace OpenDataBotAPI
         int CompanyCount { get; }
         int CompanyIndex { get; set; }
         FullCompany FullCompany { get; }
-        ChangesCompany CurrentChanges { get; }
+        ChangesCompany Changes { get; }
         Personal Personal { get; }
 
 
