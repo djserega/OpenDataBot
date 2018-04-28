@@ -22,6 +22,8 @@ namespace OpenDataBotAPI
 
         internal T GetInfo<T>(string param) where T : class, new()
         {
+            param = param.Trim();
+
             _typeT = typeof(T);
 
             WebRequest webRequest = GetWebRequest(param);
@@ -39,6 +41,8 @@ namespace OpenDataBotAPI
 
         internal List<T> GetInfos<T>(string param) where T : class, new()
         {
+            param = param.Trim();
+
             _typeT = typeof(T);
 
             WebRequest webRequest = GetWebRequest(param);
