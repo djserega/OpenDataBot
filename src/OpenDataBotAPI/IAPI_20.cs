@@ -13,11 +13,17 @@ namespace OpenDataBotAPI
         string ErrorText { get; }
 
         Fop Fop { get; }
+
         Company Company { get; }
         int CompanyCount { get; }
         int CompanyIndex { get; set; }
+
         FullCompany FullCompany { get; }
+
         ChangesCompany Changes { get; }
+        int ChangesCount { get; }
+        int ChangesIndex { get; set; }
+
         Personal Personal { get; }
 
 
@@ -28,5 +34,6 @@ namespace OpenDataBotAPI
         void GetPersonalInfo(string pib);
 
         bool NextCompany();
+        bool NextChanges();
     }
 }
