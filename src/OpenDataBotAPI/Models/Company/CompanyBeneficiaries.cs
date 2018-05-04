@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace OpenDataBotAPI
+﻿namespace OpenDataBotAPI
 {
     public class CompanyBeneficiaries : ICompanyBeneficiaries
     {
