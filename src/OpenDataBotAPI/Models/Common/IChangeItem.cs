@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace OpenDataBotAPI
 {
     public interface IChangeItem
     {
         DateTime Date { get; }
-        Changes Changes { get; }
+        
+        Changes CurrentChanges { get; }
+        int ChangesCount { get; }
+        int ChangesIndex { get; set; }
+        bool NextChanges();
     }
 }

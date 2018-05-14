@@ -71,46 +71,6 @@ namespace OpenDataBotAPI
             return true;
         }
 
-        public ITax_debts CurrentTax_debts { get; set; }
-        public Tax_debts[] Tax_debts 
-        {
-            set
-            {
-                _listTax_debts.Clear();
-                if (value != null)
-                    foreach (Tax_debts item in value)
-                        _listTax_debts.Add(item);
-            }
-        }
-        private List<Tax_debts> _listTax_debts = new List<Tax_debts>();
-        private int _tax_debtsIndex;
-        public int Tax_debtsCount { get { return _listTax_debts.Count(); } }
-        public int Tax_debtsIndex
-        {
-            get { return _tax_debtsIndex; }
-            set
-            {
-                if (value < 0)
-                    _tax_debtsIndex = 0;
-                else if (value > Tax_debtsCount - 1)
-                    _tax_debtsIndex = Tax_debtsCount;
-                else
-                    _tax_debtsIndex = value;
-            }
-        }
-        public bool NextTax_debts()
-        {
-            if (_tax_debtsIndex < 0
-                || _tax_debtsIndex > Tax_debtsCount - 1)
-            {
-                _tax_debtsIndex = 0;
-                CurrentTax_debts = null;
-                return false;
-            }
-
-            CurrentTax_debts = _listTax_debts[_tax_debtsIndex];
-            _tax_debtsIndex++;
-            return true;
-        }
+        public Tax_debts Tax_debts { get; set; }
     }
 }
