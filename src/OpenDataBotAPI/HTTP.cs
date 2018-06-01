@@ -18,6 +18,22 @@ namespace OpenDataBotAPI
 
         private Type _typeT;
 
+        internal T GetInfo<T>() where T : class, new()
+        {
+            _typeT = typeof(T);
+
+            WebRequest webRequest = GetWebRequest();
+
+            WebResponse webResponse = webRequest.GetResponse();
+
+            string response = string.Empty;
+            using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
+            {
+                response = reader.ReadToEnd();
+            }
+
+            return Json<T>.DeserializeString(response);
+        }
         internal T GetInfo<T>(string param) where T : class, new()
         {
             param = param.Trim();
@@ -58,7 +74,7 @@ namespace OpenDataBotAPI
             return Json<T>.DeserializeStringToList(response);
         }
 
-        private WebRequest GetWebRequest(string param)
+        private WebRequest GetWebRequest(string param = "")
         {
             StringBuilder stringBuilder = new StringBuilder(_url);
 
@@ -72,11 +88,14 @@ namespace OpenDataBotAPI
                 stringBuilder.Append("/changes/");
             else if (_typeT == typeof(Personal))
                 stringBuilder.Append("/person");
+            else if (_typeT == typeof(APIStatistics))
+                stringBuilder.Append("/statistics");
             else
                 return null;
 
             if (_typeT != typeof(Personal))
-                stringBuilder.Append(param);
+                if (!string.IsNullOrWhiteSpace(param))
+                    stringBuilder.Append(param);
 
             stringBuilder.Append("?apiKey=");
             stringBuilder.Append(_apiKey);

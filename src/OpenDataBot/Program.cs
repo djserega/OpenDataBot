@@ -42,18 +42,21 @@ namespace OpenDataBot
                                 _openDataBot.APIKey = string.Empty;
                                 break;
                             case 1:
-                                GetInfoFop();
+                                GetStatistic();
                                 break;
                             case 2:
-                                GetInfoCompany();
+                                GetInfoFop();
                                 break;
                             case 3:
-                                GetInfoFullCompany();
+                                GetInfoCompany();
                                 break;
                             case 4:
-                                GetInfoChanges();
+                                GetInfoFullCompany();
                                 break;
                             case 5:
+                                GetInfoChanges();
+                                break;
+                            case 6:
                                 GetPersonalInfo();
                                 break;
                             default:
@@ -83,11 +86,19 @@ namespace OpenDataBot
             Console.WriteLine("Доступные действия:");
             Console.WriteLine("-1 - ввести apikey");
             Console.WriteLine("0 - завершение работы");
-            Console.WriteLine("1 - данные ФОП");
-            Console.WriteLine("2 - данные Компании");
-            Console.WriteLine("3 - полная информация о Компании");
-            Console.WriteLine("4 - изменения компании");
-            Console.WriteLine("5 - персональная информацияю");
+            Console.WriteLine("1 - статистика");
+            Console.WriteLine("2 - данные ФОП");
+            Console.WriteLine("3 - данные Компании");
+            Console.WriteLine("4 - полная информация о Компании");
+            Console.WriteLine("5 - изменения компании");
+            Console.WriteLine("6 - персональная информацияю");
+        }
+
+        private static void GetStatistic()
+        {
+            _openDataBot.GetStatistic();
+            if (!_openDataBot.Error)
+                Console.WriteLine(_openDataBot.Fop.Full_name);
         }
 
         private static void GetInfoFop()
@@ -108,7 +119,7 @@ namespace OpenDataBot
                 while (_openDataBot.NextCompany())
                 {
                     Console.WriteLine(_openDataBot.Company.Full_name);
-                    Company company = _openDataBot.Company;
+                    OpenDataBotAPI.Company company = _openDataBot.Company;
                     while (company.NextBeneficiaries())
                         Console.WriteLine(company.CurrentBeneficiaries.Title);
                 }

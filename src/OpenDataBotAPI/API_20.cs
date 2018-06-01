@@ -57,6 +57,31 @@ namespace OpenDataBotAPI
 
         #region API
 
+        // STATISTIC
+
+        public APIStatistics Statistics { get; private set; }
+
+        public void GetStatistic()
+        {
+            if (!CheckFilledAPIKey())
+                return;
+
+            InitializeHTTP();
+
+            try
+            {
+                Statistics = _http.GetInfo<APIStatistics>();
+            }
+            catch (WebException ex)
+            {
+                SetWebExceptionErrorByType<APIStatistics>(ex);
+            }
+            catch (Exception ex)
+            {
+                SetError(ex.Message);
+            }
+        }
+
         // FOP
         public Fop Fop { get; private set; }
 
@@ -272,7 +297,19 @@ namespace OpenDataBotAPI
             Type typeT = typeof(T);
 
             string textStatus = string.Empty;
-            if (typeT == typeof(Fop))
+            if (typeT == typeof(APIStatistics))
+            {
+                switch (webResponse.StatusCode)
+                {
+                    case HttpStatusCode.Forbidden:
+                        textStatus = "Некорректный api-ключ.";
+                        break;
+                    default:
+                        textStatus = $"Статистика. {ex.Status}. {ex.Message}";
+                        break;
+                }
+            }
+            else if (typeT == typeof(Fop))
             {
                 switch (webResponse.StatusCode)
                 {
